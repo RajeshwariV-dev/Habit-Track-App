@@ -1,16 +1,3 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The HabitTrack – AI-Based Daily Habit Tracker is a responsive productivity web application built using the MERN stack that helps users build and maintain positive daily habits. The platform allows users to create, track, update, and analyze their habits while receiving AI-powered insights and suggestions to improve consistency and productivity.
+Users can define habits such as “Exercise daily”, “Read for 30 minutes”, or “Drink 3L water”, mark them as completed each day, and monitor progress through a visual dashboard. The system uses basic AI logic (or API) to analyze user activity and provide suggestions like “You are most consistent on weekdays” or “Try setting reminders in the evening for better completion rates.”
+The application includes a secure authentication system, ensuring that each user has a personalized habit dashboard and tracking history.

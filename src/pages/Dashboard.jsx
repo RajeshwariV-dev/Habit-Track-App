@@ -1,165 +1,164 @@
-import React from "react";
-import {
-  Target,
-  Flame,
-  Trophy,
-  Plus,
-} from "lucide-react";
-
-import Navbar from "../components/Navbar.jsx"
+import React, { useState } from "react";
+import { Target, Flame, Trophy, Plus, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar.jsx";
 
 function Dashboard() {
+  const navigate = useNavigate();
+
+  const [habits, setHabits] = useState([
+    { id: 1, name: "Drink Water", completed: false },
+    { id: 2, name: "Exercise", completed: false },
+  ]);
+
+  // ✅ Toggle complete
+  const toggleComplete = (id) => {
+    setHabits((prev) =>
+      prev.map((h) =>
+        h.id === id ? { ...h, completed: !h.completed } : h
+      )
+    );
+  };
+
+  // 🗑 Delete habit
+  const deleteHabit = (id) => {
+    setHabits((prev) => prev.filter((h) => h.id !== id));
+  };
+
+  // 📊 Stats
+  const total = habits.length;
+  const completed = habits.filter((h) => h.completed).length;
+
+  // 🔥 simple streak logic
+  let streak = 0;
+  for (let h of habits) {
+    if (h.completed) streak++;
+    else break;
+  }
+
+  const achievements = Math.floor(completed / 3);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600 text-white">
 
-      {/* Navbar */}
       <Navbar />
 
-      {/* Main Content */}
       <div className="max-w-6xl mx-auto px-6 py-10">
 
-        {/* Greeting */}
+        {/* HEADER */}
         <div className="mb-8">
-
           <h1 className="text-4xl font-extrabold mb-2">
             Good Afternoon 👋
           </h1>
-
-          <p className="text-gray-200">
-            Friday, May 8, 2026
-          </p>
-
+          <p className="text-gray-200">Your Habit Dashboard</p>
         </div>
 
-        {/* Daily Tip */}
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-5 mb-8 shadow-xl">
-
-          <h2 className="font-bold text-lg mb-1">
-            💡 Daily Tip
-          </h2>
-
-          <p className="text-gray-200">
-            Start small. Tiny habits repeated daily create
-            extraordinary results over time.
-          </p>
-
-        </div>
-
-        {/* Stats Cards */}
+        {/* STATS */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">
 
-          {/* Progress */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-xl hover:scale-105 ">
-
-            <div className="flex justify-center mb-4">
-              <div className="bg-indigo-500/30 p-4 rounded-full">
-                <Target size={32} />
-              </div>
-            </div>
-
-            <h2 className="text-4xl font-extrabold text-center">
-              0/0
-            </h2>
-
-            <p className="text-center text-gray-200 mt-2">
-              Today's Progress
-            </p>
-
+          <div className="bg-white/10 p-8 rounded-3xl text-center">
+            <Target size={40} className="mx-auto mb-2" />
+            <h2 className="text-4xl font-bold">{completed}/{total}</h2>
+            <p>Progress</p>
           </div>
 
-          {/* Streak */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-xl hover:scale-105 transition duration-300">
-
-            <div className="flex justify-center mb-4">
-              <div className="bg-orange-500/30 p-4 rounded-full">
-                <Flame size={32} />
-              </div>
-            </div>
-
-            <h2 className="text-4xl font-extrabold text-center">
-              0
-            </h2>
-
-            <p className="text-center text-gray-200 mt-2">
-              Active Streaks
-            </p>
-
+          <div className="bg-white/10 p-8 rounded-3xl text-center">
+            <Flame size={40} className="mx-auto mb-2" />
+            <h2 className="text-4xl font-bold">{streak}</h2>
+            <p>Streak</p>
           </div>
 
-          {/* Achievement */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-xl hover:scale-105 transition duration-300">
-
-            <div className="flex justify-center mb-4">
-              <div className="bg-pink-500/30 p-4 rounded-full">
-                <Trophy size={32} />
-              </div>
-            </div>
-
-            <h2 className="text-4xl font-extrabold text-center">
-              0
-            </h2>
-
-            <p className="text-center text-gray-200 mt-2">
-              Achievements
-            </p>
-
+          <div className="bg-white/10 p-8 rounded-3xl text-center">
+            <Trophy size={40} className="mx-auto mb-2" />
+            <h2 className="text-4xl font-bold">{achievements}</h2>
+            <p>Achievements</p>
           </div>
 
         </div>
 
-        {/* Habits Section */}
-        <div>
+        {/* HEADER ROW */}
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-3xl font-bold">Today's Habits</h2>
 
-          <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={() => navigate("/createhabit")}
+            className="flex items-center gap-2 bg-white text-purple-700 px-5 py-3 rounded-xl font-semibold"
+          >
+            <Plus size={18} />
+            Add Habit
+          </button>
+        </div>
 
-            <h2 className="text-3xl font-bold">
-              Today's Habits
-            </h2>
+        {/* HABITS LIST */}
+        <div className="space-y-4">
 
-            <button className="flex items-center gap-2 bg-white text-purple-700 px-5 py-3 rounded-xl font-semibold hover:scale-105 transition">
+         {habits.length === 0 && (
+  <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-10 text-center shadow-xl">
 
-              <Plus size={18} />
+    <div className="text-5xl mb-4">🚀</div>
 
-              Add Habit
+    <h2 className="text-2xl font-bold mb-2">
+      No habits yet
+    </h2>
 
-            </button>
+    <p className="text-gray-200 mb-6">
+      Start building your routine today. Add your first habit and stay consistent.
+    </p>
 
-          </div>
+    <button
+      onClick={() => navigate("/createhabit")}
+      className="bg-white text-purple-700 px-6 py-3 rounded-xl font-bold hover:scale-105 transition"
+    >
+      + Add Your First Habit
+    </button>
 
-          {/* Empty State */}
-          <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl min-h-[350px] flex flex-col items-center justify-center text-center p-10 shadow-xl">
+  </div>
+)}
 
-            <div className="bg-indigo-500/30 p-6 rounded-full mb-6">
+          {habits.map((habit) => (
+            <div
+              key={habit.id}
+              className="bg-white/10 p-5 rounded-2xl flex justify-between items-center"
+            >
 
-              <Target size={45} />
+              {/* 👇 Habit name with strike-through */}
+              <span
+                className={`text-lg transition ${
+                  habit.completed ? "line-through text-gray-300" : ""
+                }`}
+              >
+                {habit.name}
+              </span>
 
+              <div className="flex items-center gap-3">
+
+                {/* COMPLETE BUTTON */}
+                <button
+                  onClick={() => toggleComplete(habit.id)}
+                  className={`px-4 py-2 rounded-xl font-bold transition ${
+                    habit.completed
+                      ? "bg-green-500 text-white"
+                      : "bg-white text-purple-700"
+                  }`}
+                >
+                  {habit.completed ? "Done ✓" : "Mark"}
+                </button>
+
+                {/* DELETE BUTTON */}
+                <button
+                  onClick={() => deleteHabit(habit.id)}
+                  className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-xl"
+                >
+                  <Trash2 size={18} />
+                </button>
+
+              </div>
             </div>
-
-            <h2 className="text-3xl font-bold mb-3">
-              No habits yet
-            </h2>
-
-            <p className="text-gray-200 max-w-md leading-relaxed mb-8">
-
-              Start building better habits today.
-              Focus on one small change you can
-              do consistently.
-
-            </p>
-
-            <button className="bg-white text-purple-700 px-8 py-4 rounded-2xl font-bold hover:scale-105 transition shadow-lg">
-
-              + Create Your First Habit
-
-            </button>
-
-          </div>
+          ))}
 
         </div>
 
       </div>
-
     </div>
   );
 }

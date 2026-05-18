@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   User,
   Mail,
@@ -7,18 +8,43 @@ import {
   Target,
   Camera,
   Save,
+  LogOut,
 } from "lucide-react";
+
+import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 
-
 function Profile() {
+
+  const navigate = useNavigate();
 
   const [profile, setProfile] = useState({
     name: "Habit Tracker",
     email: "user@habittrack.app",
     bio: "",
   });
+
+  // LOGOUT FUNCTION
+  const handleLogout = () => {
+
+    // REMOVE USER DATA
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    // CLEAR SESSION
+    sessionStorage.clear();
+
+    // REDIRECT
+    navigate("/login");
+  };
+
+  // SAVE PROFILE
+  const handleSave = () => {
+    localStorage.setItem("profile", JSON.stringify(profile));
+
+    alert("Profile updated successfully!");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600 text-white">
@@ -44,10 +70,10 @@ function Profile() {
 
         <div className="grid lg:grid-cols-3 gap-8">
 
-          {/* Left Side */}
+          {/* LEFT SIDE */}
           <div className="lg:col-span-1">
 
-            {/* Profile Card */}
+            {/* PROFILE CARD */}
             <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl text-center">
 
               {/* Avatar */}
@@ -55,7 +81,7 @@ function Profile() {
 
                 <div className="w-32 h-32 rounded-full bg-white text-purple-700 flex items-center justify-center text-5xl font-extrabold shadow-xl border-4 border-white">
 
-                  H
+                  {profile.name.charAt(0)}
 
                 </div>
 
@@ -69,11 +95,11 @@ function Profile() {
               </div>
 
               <h2 className="text-3xl font-bold mb-2">
-                Habit Tracker
+                {profile.name}
               </h2>
 
               <p className="text-gray-200 mb-6">
-                user@habittrack.app
+                {profile.email}
               </p>
 
               {/* Member */}
@@ -87,7 +113,7 @@ function Profile() {
 
             </div>
 
-            {/* Stats */}
+            {/* STATS */}
             <div className="grid grid-cols-3 gap-4 mt-6">
 
               {/* Habits */}
@@ -148,7 +174,7 @@ function Profile() {
 
           </div>
 
-          {/* Right Side */}
+          {/* RIGHT SIDE */}
           <div className="lg:col-span-2">
 
             <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl">
@@ -157,10 +183,10 @@ function Profile() {
                 Edit Profile
               </h2>
 
-              {/* Form */}
+              {/* FORM */}
               <div className="space-y-6">
 
-                {/* Name */}
+                {/* NAME */}
                 <div>
 
                   <label className="block mb-2 font-medium">
@@ -190,7 +216,7 @@ function Profile() {
 
                 </div>
 
-                {/* Email */}
+                {/* EMAIL */}
                 <div>
 
                   <label className="block mb-2 font-medium">
@@ -220,7 +246,7 @@ function Profile() {
 
                 </div>
 
-                {/* Bio */}
+                {/* BIO */}
                 <div>
 
                   <label className="block mb-2 font-medium">
@@ -242,12 +268,27 @@ function Profile() {
 
                 </div>
 
-                {/* Save Button */}
-                <button className="w-full flex items-center justify-center gap-3 bg-white text-purple-700 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition shadow-xl">
+                {/* SAVE BUTTON */}
+                <button
+                  onClick={handleSave}
+                  className="w-full flex items-center justify-center gap-3 bg-white text-purple-700 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition shadow-xl"
+                >
 
                   <Save size={22} />
 
                   Save Changes
+
+                </button>
+
+                {/* LOGOUT BUTTON */}
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 text-white py-4 rounded-2xl font-bold text-lg transition shadow-xl"
+                >
+
+                  <LogOut size={22} />
+
+                  Logout
 
                 </button>
 

@@ -11,6 +11,18 @@
       "email": "raji@gmail.com",
       "password": "Raji@123",
       "id": "uDc4uwjIoqc"
+    },
+    {
+      "username": "Smookey",
+      "email": "smoke@gmail.com",
+      "password": "Smokkey@123",
+      "id": "RD2Ns0NGA34"
+    },
+    {
+      "username": "lucky",
+      "email": "luck@gmail.com",
+      "password": "luck@123",
+      "id": "zmB4nE41JlA"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

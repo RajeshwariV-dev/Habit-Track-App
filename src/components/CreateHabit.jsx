@@ -66,7 +66,20 @@ function CreateHabit() {
               {
                 parts: [
                   {
-                    text: `Give me 5 habit suggestions related to ${habitName}. Return comma-separated values only.`,
+                    text: `
+Generate exactly 5 short habit suggestions related to ${habitName}.
+
+Rules:
+- Return ONLY comma-separated habit names
+- No numbering
+- No explanation
+- No markdown
+- No THINK text
+- No extra sentences
+
+Example:
+Morning Run, Drink Water, Stretching, Meditation, Sleep Early
+`,
                   },
                 ],
               },
